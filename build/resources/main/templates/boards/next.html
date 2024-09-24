@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>[[${article.title}]]</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: rgb(213, 236, 227);
+        }
+        h1 {
+          color: #333;
+          text-align: center;
+        }
+        form {
+          max-width: 700px;
+          margin: 0 auto;
+          padding: 20px;
+        }
+        button {
+          background-color: #007bff;
+          padding: 10px 20px;
+          border-radius: 10px;
+          border: none;
+          font-size: 16px;
+          display: inline-block;
+          margin-bottom: 20px;
+          color: white;
+        }
+        a {
+          background-color: #007bff;
+          padding: 10px 20px;
+          border-radius: 10px;
+          border: none;
+          font-size: 16px;
+          display: inline-block;
+          margin-bottom: 20px;
+          color: white;
+        }
+
+        div {
+          margin-bottom: 15px;
+        }
+        label {
+          display: block;
+          margin-bottom: 5px;
+          font-weight: bold;
+        }
+        input[type="text"],
+        textarea,
+        select {
+          width: 100%;
+          padding: 10px;
+          margin-top: 5px;
+          border: 1px solid rgb(142, 138, 138);
+          border-radius: 10px;
+          box-sizing: border-box;
+        }
+        textarea {
+          resize: vertical;
+          height: 150px;
+        }
+        input[type="submit"] {
+          background-color: #007bff;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 16px;
+        }
+        input[type="submit"]:hover {
+          background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h1>[[${article.title}]]</h1>
+<hr />
+<form
+        th:action="@{/article/{articleId}/delete (articleId = ${article.id})}"
+        method="post"
+>
+    <div>
+        <label for="password-input">Password:</label>
+        <input type="password" id="password-input" name="password" required />
+        <input type="submit" value="Delete" />
+    </div>
+</form>
+<hr />
+<br />
+<h4>Board : [[${article.board.name}]]</h4>
+<p>Content:</p>
+<hr />
+<div>[[${article.content}]]</div>
+<hr />
+
+<a th:href="@{/article/{preArId} (preArId = ${preArticle.id})}">Previous</a>
+<a th:href="@{/article/{nextArId} (nextArId = ${nextArticle.id})}">Next</a>
+<button onclick="window.history.back()">Back</button>
+<a th:href="@{/article/{articleId}/update (articleId = ${article.id})}"
+>Update</a
+>
+<a href="/boards">Home(All Boards)</a>
+<hr />
+<!----------------------------------->
+<h3>Comment:</h3>
+<div th:if="${article.comments.isEmpty()}">
+    <p>No Comments</p>
+</div>
+<div
+        th:unless="${article.comments.isEmpty()}"
+        th:each="comment : ${article.comments}"
+        class="comment"
+>
+    <p><strong>[[${comment.id}]].</strong> [[${comment.content}]]</p>
+
+    <form
+            th:action="@{/article/{articleId}/comment/{commentId}/delete (articleId=${article.id}, commentId=${comment.id})}"
+            method="post"
+    >
+        <div>
+            <label for="password-comment-delete">Password:</label>
+            <input
+                    type="password"
+                    id="password-comment-delete"
+                    name="passwordCommentDelete"
+                    required
+            />
+            <input type="submit" value="Delete" />
+        </div>
+    </form>
+</div>
+<hr />
+<!----------------------------------->
+<form
+        th:action="@{/article/{articleId}/comment (articleId=${article.id})}"
+        method="post"
+>
+    <div>
+        <label for="content-area">Content:</label>
+        <textarea name="content" id="content-area"></textarea>
+    </div>
+    <div>
+        <label for="password-input-comment">Password:</label>
+        <input
+                type="password"
+                id="password-input-comment"
+                name="passwordComment"
+                required
+        />
+    </div>
+    <div>
+        <input type="submit" value="Add Comment" />
+    </div>
+</form>
+</body>
+</html>

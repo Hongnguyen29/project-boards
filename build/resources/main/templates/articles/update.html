@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Update Article</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: rgb(213, 236, 227);
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+      }
+      form {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      button {
+        background-color: #007bff;
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: none;
+        font-size: 16px;
+        display: inline-block;
+        margin-bottom: 20px;
+        color: white;
+      }
+      a {
+        background-color: #007bff;
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: none;
+        font-size: 16px;
+        display: inline-block;
+        margin-bottom: 20px;
+        color: white;
+      }
+
+      div {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      input[type="text"],
+      textarea,
+      select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid rgb(142, 138, 138);
+        border-radius: 10px;
+        box-sizing: border-box;
+      }
+      select {
+        width: 30%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid rgb(142, 138, 138);
+        border-radius: 10px;
+        box-sizing: border-box;
+      }
+      input[type="password"] {
+        width: 0.2;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid rgb(142, 138, 138);
+        border-radius: 10px;
+        box-sizing: border-box;
+      }
+      textarea {
+        resize: vertical;
+        height: 150px;
+      }
+      input[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      input[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Update Article</h1>
+    <button onclick="window.history.back()">Back</button>
+    <a href="/boards">Home(All Boards)</a>
+
+    <form
+      th:action="@{/article/{articleId}/update  (articleId = ${article.id})}"
+      method="post"
+    >
+      <div>
+        <label for="title-input">Title :</label>
+        <input
+          type="text"
+          id="title-input"
+          name="title"
+          th:value="${article.title}"
+        />
+      </div>
+
+      <div style="text-align: start">
+        <label for="content-area">Content:</label>
+        <textarea name="content" id="content-area">
+[[${article.content}]]</textarea
+        >
+      </div>
+      <div>
+        <label for="password-input">Password :</label>
+        <input type="password" id="password-input" name="password" required />
+      </div>
+      <div>
+        <label for="board-select">Board :</label>
+        <select name="board" id="board-select">
+          <option th:value="${board.id}" th:each="board: ${boards}">
+            [[${board.id}]]. [[${board.name}]]
+          </option>
+        </select>
+      </div>
+      <input type="submit" value="Update" />
+    </form>
+  </body>
+</html>

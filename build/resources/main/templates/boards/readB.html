@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8" />
+    <title>[[${board.name}]]</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: rgb(213, 236, 227);
+      }
+      a {
+        color: blue;
+        text-decoration: none;
+        padding: 8px 16px;
+        display: inline-block;
+        text-decoration: underline;
+      }
+      .write {
+        background-color: #007bff;
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: none;
+        font-size: 16px;
+        display: inline-block;
+        margin-bottom: 20px;
+        color: white;
+      }
+      a:hover {
+        background-color: #ddd;
+      }
+      h1 {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+      }
+      h2 {
+        background-color: #555;
+        color: #fff;
+        padding: 8px;
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+        max-width: 800px;
+        margin: 10px auto;
+      }
+      .article-list {
+        max-width: 800px;
+        margin: 10px auto;
+        padding: 0;
+        list-style-type: none;
+      }
+      .article-item {
+        text-align: center;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+      }
+      .article-item span {
+        flex: 1;
+        text-align: start;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/boards">전체 게시판(All Boards)|</a>
+    <a href="/boards/1">자유 게시판(Free Board)|</a>
+    <a href="/boards/2">개발 게시판(Development Board)|</a>
+    <a href="/boards/3">일상 게시판(Daily Life Board)|</a>
+    <a href="/boards/4">사건사고 게시판(Incident Board)</a>
+    <h1>[[${board.name}]]</h1>
+    <a class="write" href="/article/create">Write</a>
+    <h2>
+      <span>#</span>
+      <span>Title</span>
+    </h2>
+    <ul class="article-list">
+      <li class="article-item" th:each="article:${articles}">
+        <span th:text="${article.id}"></span>
+        <a th:href="@{/article/{articleId} (articleId=${article.id})}"
+          >[[${article.title}]]</a
+        >
+      </li>
+    </ul>
+  </body>
+</html>
